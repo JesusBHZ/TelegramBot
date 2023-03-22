@@ -3,6 +3,9 @@ from telegram.ext import CommandHandler
 from telegram.ext import MessageHandler
 from telegram.ext import Filters
 import os
+from clasificador import Clasificador as Clasificador
+
+clasificador = Clasificador()
 
 token = "6035437090:AAGBpKI74hI64gZhDal3TX_IYNBhhhS7yCA"
 
@@ -78,6 +81,8 @@ def image(bot, update):
         filename = os.path.join('downloads/images/', 'imagen.jpg')
         file.download(filename)
         update.message.reply_text(f"Imagen recibida")
+        res = clasificador.clasificar(filename)
+        update.message.reply_text(f"Es un {res[0]} estoy {res[1]}% seguro de eso")
     except Exception as e:
         print(f"Error image: {e.args}")
 
